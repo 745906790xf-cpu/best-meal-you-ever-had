@@ -41,6 +41,16 @@ def check_line(line: str) -> str:
         raise ValueError(
             "single-line rule failed: entry has surrounding whitespace or a line break"
         )
+    if "  " in line:
+        raise ValueError(
+            "spacing rule failed: entry contains a double space, which reads "
+            "as a typo when the judge reads it aloud"
+        )
+    if line[-1] not in ".!?":
+        raise ValueError(
+            "ending rule failed: entry does not end with terminal punctuation, "
+            "so it does not read as one finished sentence"
+        )
     if any(ord(ch) < 32 for ch in line):
         raise ValueError(
             "control-character rule failed: entry contains a control character"
